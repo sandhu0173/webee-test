@@ -180,7 +180,7 @@ class EventsController extends BaseController
 
     public function getFutureEventsWithWorkshops() {
         
-        $date=date('Y-m-d H:i:s');
+        $date=\Carbon\Carbon::now();
         return Event::with('workshops')
         ->whereHas('workshops', function ($query) use ( $date) {
             return $query->where('start', '>' ,$date);

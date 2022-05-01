@@ -96,27 +96,8 @@ class MenuController extends BaseController
      */
 
     public function getMenuItems() {
-        $menus_arr=[];
-        $menus=MenuItem::with('children')->whereNull('parent_id')->get();
-        foreach($menus as $menu)
-        {
-            $this->children=[];
-            $menus_arr[]=$menu;
-            $menus_arr[]['children']=$this->getSubMenus($menu->children);
-        }
-        return $menus_arr;
+        return $menus=MenuItem::with('children')->whereNull('parent_id')->get();
+        
     }
 
-    function getSubMenus($children){
-        foreach($children as $child){
-
-            $menus=MenuItem::with('children')->where('parent_id',$child->id)->get();
-            foreach($menus as $menu)
-            {
-                $this->children[]=$menu;
-                $this->getSubMenus($menu->children);
-            }
-        }
-        return $this->children;
-    }
 }
